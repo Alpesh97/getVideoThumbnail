@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+    <style type="text/css">
+    body {
+        margin: 0;
+    }
+
+    #video-demo-container {
+        width: 400px;
+        margin: 40px auto;
+    }
+
+    #thumbnail-container {
+        margin-top: 20px;
+    }
+
+    #canvas {
+        display: none;
+        margin-top: 20px;
+    }
+</style>
+</head>
+
+<body>
+    <div id="video-demo-container">
+        <img id="custom-image" src="images/image1.png" alt="image1">
+        <canvas id="canvas"></canvas>
+        <a id="get-thumbnail" href="#">Download Thumbnail</a>
+    </div>
+    <script src="js/jquery.js"></script>
+<script>
+    
+    $(window).on("load",function(){
+            // var canvas = $("#canvas").html();
+        $("#get-thumbnail").on('click', function() {
+            var image1 = $("#custom-image");
+            console.log(image1);
+            console.log(image1.dataset);
+            var canvas = document.querySelector("#canvas");
+            var image = document.getElementById("custom-image");
+            console.log(image);
+            _CTX = canvas.getContext("2d");
+            canvas.width = image.width;
+            canvas.height = image.height;
+            _CTX.drawImage(image, 0, 0);
+            // return canvas;
+
+            const playImage = new Image();
+            playImage.crossOrigin = "Anonymous";
+            playImage.src = 'images/play-icon.png';
+            playImage.onload = () => {
+                const startX = (image.width / 2) - (playImage.width / 2);
+                const startY = (image.height / 2) - (playImage.height / 2);
+                _CTX.drawImage(playImage, startX, startY, playImage.width, playImage.height);
+            };
+                document.querySelector("#canvas").style.display = 'block';
+                document.querySelector("#get-thumbnail").setAttribute('href', canvas.toDataURL());
+                document.querySelector("#get-thumbnail").setAttribute('download', 'thumbnail.png');
+            });
+        });
+</script>
+</body>
+
+</html>
